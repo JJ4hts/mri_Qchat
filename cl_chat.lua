@@ -44,12 +44,25 @@ AddEventHandler('__cfx_internal:serverPrint', function(msg)
   })
 end)
 
-AddEventHandler('chat:addMessage', function(message)
+local function exportHandler(exportName, func)
+    print(exportName, func)
+    AddEventHandler(('__cfx_export_chat_%s'):format(exportName), function(setCB)
+        setCB(func)
+    end)
+end
+
+local function addMenssage(message)
   SendNUIMessage({
     type = 'ON_MESSAGE',
     message = message
   })
+end
+
+AddEventHandler('chat:addMessage', function(message)
+addMenssage(message)
 end)
+
+exportHandler('addMessage', addMenssage)
 
 AddEventHandler('chat:addSuggestion', function(name, help, params)
   SendNUIMessage({
