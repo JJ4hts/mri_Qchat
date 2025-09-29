@@ -57,9 +57,7 @@ local function addMessage(message)
   })
 end
 
-AddEventHandler('chat:addMessage', function(message)
-addMessage(message)
-end)
+AddEventHandler('chat:addMessage', addMessage)
 
 exportHandler('addMessage', addMessage)
 
